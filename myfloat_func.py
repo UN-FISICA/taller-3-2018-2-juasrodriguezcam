@@ -1,5 +1,3 @@
-#Nota: Profesor, por alguna razón al pedir en conjunto x=suma(a,b), y=resta(a,b), por ejemplo, se me alteran las operaciones. 
-#Ellas individualmente hacen su trabajo correctamente, pero al juntarlas no supe qué pasa. Esto lo arreglé en la clase, punto 4.
 def imprimir(a):
     pc=len(a[0])
     sc=len(a[1])
@@ -14,13 +12,20 @@ def imprimir(a):
         decimal=str(decimal)+temp
     return print ("{},{}".format(entero,decimal))
 
+#Función adicional para solucionar problemas, genera una tupla dummie para no modificar la original.
+def safe(a): #Genera una copia de la tupla a,evita modificar la tupla
+        ent=a[0][:]
+        dec=a[1][:]
+        b=(ent,dec)
+        return b
+
 #Funciones adicionales para usar en suma y resta:
 #=======================================================================
 #===============================Suma1===================================
 #Esta no es la función suma que el profesor pide
 def suma1(a,b):
-    a=(safeae,safead)
-    b=(safebe,safebd)
+    a=safe(a)
+    b=safe(b)
     #Define la longitud de cada parte de las tuplas.
     all0=len(a[0])
     all1=len(a[1])
@@ -91,16 +96,14 @@ def suma1(a,b):
         esum[i]=suma
     
     m=(esum,dsum)
-    a=(safeae,safead)
-    b=(safebe,safebd)
     return m
 
 #======================================================================
 #================================Resta1================================
 #Esta no es la función resta que pide el profesor.
 def resta1(a,b):    
-    a=(safeae,safead)
-    b=(safebe,safebd)
+    a=safe(a)
+    b=safe(b)
     #Define la longitud de cada parte de las tuplas.
     all0=len(a[0])
     all1=len(a[1])
@@ -178,8 +181,6 @@ def resta1(a,b):
     
     signa=a[0][0]
     m=(eres,dres)
-    a=(safeae,safead)
-    b=(safebe,safebd)
     return m,signa
 #################################### HASTA ACÁ LAS ADICIONALES ################
 
@@ -206,6 +207,8 @@ def resta(a, b):
         return rr
     
 def multiplicacion(a, b):
+    a=safe(a)
+    b=safe(b)
     #Defino los tamaños que requiero. Se asume a arriba y b abajo.
     all0=len(a[0])
     all1=len(a[1])
