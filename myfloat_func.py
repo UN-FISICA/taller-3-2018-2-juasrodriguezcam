@@ -300,12 +300,12 @@ def multiplicacion(a, b):
     
     #Quita el primer cero en caso de que se de
     if resmulti[0][0]==0:
-        resmulti[0][0]=""
-    
+        resmulti[0].pop(0)
+        
     #Vuelve la lista decimal.
     resmulti.insert(1,list()) #Crea la parte decimal
     for i in range(all1+bll1):
-        resmulti[1].insert(0,resmulti[0].pop(clli-i-1))
+        resmulti[1].insert(0,resmulti[0].pop(clli-i-2))
     
     #Incluye el signo.
     if a[0][0]==b[0][0]:
