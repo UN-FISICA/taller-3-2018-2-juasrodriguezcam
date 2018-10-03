@@ -136,6 +136,7 @@ def resta1(a,b):
     #---------------------------Funciones-------------------------
     o=10**(alle-2)
     cuenta=0
+    cuenta1=0
     for i in range(alle):
         if i>0:
             compa=(a[0][i]-b[0][i])*o
@@ -146,6 +147,19 @@ def resta1(a,b):
             a[0][i],b[0][i]=b[0][i],a[0][i]
         for i in range(alld):
             a[1][i],b[1][i]=b[1][i],a[1][i]
+    elif cuenta==0:
+        oi=10**(alld-1)
+        cuenta=0
+        for i in range(alld):
+            compa=(a[1][i]-b[1][i])*oi
+            cuenta1=cuenta1+compa
+            oi-=9*10**(alld-i-2)
+            if cuenta1<0:
+                for i in range(alle):
+                    a[0][i],b[0][i]=b[0][i],a[0][i]
+                for i in range(alld):
+                    a[1][i],b[1][i]=b[1][i],a[1][i]
+                break
                 
     for i in range(alld-1,-1,-1):
             resta=a[1][i]-b[1][i]
