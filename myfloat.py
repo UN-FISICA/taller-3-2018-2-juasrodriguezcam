@@ -17,6 +17,7 @@ class MyFloat:
     #Esta no es la función suma que el profesor pide
     def suma1(self,other):
         self.a=MyFloat.safe(self.sa)
+        other.a=MyFloat.safe(other.sa)
         #Define la longitud de cada parte de las tuplas.
         all0=len(self.a[0])
         all1=len(self.a[1])
@@ -95,6 +96,7 @@ class MyFloat:
     #Esta no es la función resta que pide el profesor.
     def resta1(self,other):    
         self.a=MyFloat.safe(self.sa)
+        other.a=MyFloat.safe(other.sa)
         #Define la longitud de cada parte de las tuplas.
         all0=len(self.a[0])
         all1=len(self.a[1])
@@ -137,6 +139,19 @@ class MyFloat:
                 self.a[0][i],other.a[0][i]=other.a[0][i],self.a[0][i]
             for i in range(alld):
                 self.a[1][i],other.a[1][i]=other.a[1][i],self.a[1][i]
+        elif cuenta==0:
+            oi=10**(alld-1)
+            cuenta=0
+            for i in range(alld):
+                compa=(self.a[1][i]-other.a[1][i])*oi
+                cuenta1=cuenta1+compa
+                oi-=9*10**(alld-i-2)
+                if cuenta1<0:
+                    for i in range(alle):
+                        self.a[0][i],other.a[0][i]=other.a[0][i],self.a[0][i]
+                    for i in range(alld):
+                        self.a[1][i],other.a[1][i]=other.a[1][i],self.a[1][i]
+                    break
                     
         for i in range(alld-1,-1,-1):
                 resta=self.a[1][i]-other.a[1][i]
@@ -177,6 +192,7 @@ class MyFloat:
     
     def __add__(self, other):
         self.a=MyFloat.safe(self.sa)
+        other.a=MyFloat.safe(other.sa)
         signa=self.a[0][0]
         signb=other.a[0][0]
         if signa==signb: #Si los signos son iguales suma y si no, resta.
@@ -189,6 +205,7 @@ class MyFloat:
 
     def __sub__(self, other):
         self.a=MyFloat.safe(self.sa)
+        other.a=MyFloat.safe(other.sa)
         signa=self.a[0][0]
         signb=other.a[0][0]
         if signa!=signb: #Si los signos son iguales resta y si no, suma.
@@ -201,6 +218,7 @@ class MyFloat:
        
     def __mul__(self, other):
         self.a=MyFloat.safe(self.sa)
+        other.a=MyFloat.safe(other.sa)
         #Defino los tamaños que requiero. Se asume a arriba y b abajo.
         all0=len(self.a[0])
         all1=len(self.a[1])
@@ -278,12 +296,12 @@ class MyFloat:
         
         #Quita el primer cero en caso de que se de
         if resmulti[0][0]==0:
-            resmulti[0][0]=""
+            resmulti[0].pop(0)
         
         #Vuelve la lista decimal.
         resmulti.insert(1,list()) #Crea la parte decimal
         for i in range(all1+bll1):
-            resmulti[1].insert(0,resmulti[0].pop(clli-i-1))
+            resmulti[1].insert(0,resmulti[0].pop(clli-i-2))
         
         #Incluye el signo.
         if self.a[0][0]==other.a[0][0]:
