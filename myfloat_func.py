@@ -221,6 +221,8 @@ def resta(a, b):
         return rr
     
 def multiplicacion(a, b):
+    a1=safe(a)
+    b1=safe(b)
     a=safe(a)
     b=safe(b)
     #Defino los tamaños que requiero. Se asume a arriba y b abajo.
@@ -231,12 +233,27 @@ def multiplicacion(a, b):
     allt=all0+all1-1
     bllt=bll0+bll1-1
     
+    if all0==1:
+        a[0].insert(1,0)
+    if bll0==1:
+        b[0].insert(1,0)
+    if all1==0:
+        a[1].insert(1,0)
+    if bll1==0:
+        b[1].insert(1,0)
+    
+    all0=len(a[0])
+    all1=len(a[1])
+    bll0=len(b[0])
+    bll1=len(b[1])
+    allt=all0+all1-1
+    bllt=bll0+bll1-1
+
     #Crea una lista que va a albergar las listas de mult.parcial.
     c=list(range(bllt))
     
     #Crear un vector resultado con la longitud total, tal que
     #es una lista decimal con las posiciones ya definidas.
-    resmulti=list(range(1))
     resmulti=[list(range(allt+bllt))]
     for p in range(allt+bllt):
         resmulti[0][p]=resmulti[0][p]*0
@@ -252,7 +269,7 @@ def multiplicacion(a, b):
         c[k]=[] #Hace una con la cantidad de elementos de a
         for q in range(allt):
             c[k].insert(0,0)
-        
+
     #Multiplica
     for l in range(bllt):#Toma los valores de b
         for m in range(allt):#Toma los valores de a
@@ -269,8 +286,7 @@ def multiplicacion(a, b):
                     pd=int(c[l][allt-m-1][0]) #Guarda el valor del primer dígito.
                     c[l][allt-m-1]=int(c[l][allt-m-1][1]) #Vuelve a c el segundo dígito.
                     c[l][allt-m-2]=c[l][allt-m-2]+pd #Suma lo que lleva al siguiente.
-                    
-        
+              
     #Aumenta los números mediante el cero.
     for m in range(bllt):
         if len(c[m])==allt:
@@ -287,7 +303,7 @@ def multiplicacion(a, b):
                 c[m].insert(0,0)
                 n+=1
         c[m]=c[m][::-1]#Los regresa a su posición inicial.
-    
+        
     #Suma los números:
     clli=len(c[0])
     for h in range(bllt):
@@ -301,12 +317,13 @@ def multiplicacion(a, b):
     #Quita el primer cero en caso de que se de
     if resmulti[0][0]==0:
         resmulti[0].pop(0)
-        
+    
+    resl=len(resmulti[0])
     #Vuelve la lista decimal.
     resmulti.insert(1,list()) #Crea la parte decimal
     for i in range(all1+bll1):
-        resmulti[1].insert(0,resmulti[0].pop(clli-i-2))
-    
+        resmulti[1].insert(0,resmulti[0].pop(resl-i-1))
+
     #Incluye el signo.
     if a[0][0]==b[0][0]:
         resmulti[0].insert(0,"+")
@@ -315,7 +332,8 @@ def multiplicacion(a, b):
 
     #Convierte la lista en tupla para que la lea imprimir.
     mm=(resmulti[0],resmulti[1])
-
+    a=a1
+    b=b1
     return mm
 
 
