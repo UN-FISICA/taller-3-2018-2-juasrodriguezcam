@@ -331,7 +331,8 @@ class MyFloat:
     def __div__(self):
         pass
 
-    def __radd__(self):
+    def __radd__(self,other):
+        
         pass
 
     def __rsub__(self):
@@ -362,8 +363,42 @@ class MyFloat:
             decimal=str(decimal)+temp
         return ("{},{}".format(entero,decimal))
 
-    def __eq__(self):
-        pass
+    def __eq__(self,other):
+        con=2
+        lona=len(self.a)
+        lonb=len(other.a)
+        if lona!=lonb:
+          print("Son tuplas diferentes")
+          con=0
+        elif lona==lonb:
+          for i in range(lona):
+            ver1=lona-1
+            loninta=len(self.a[i])
+            lonintb=len(other.a[i])
+            if loninta!=lonintb:
+              print("Son tuplas diferentes")
+              con=0
+              break
+            elif loninta==lonintb:
+              for j in range(loninta):
+                ver2=loninta-1
+                x=self.a[i][j]
+                y=other.[i][j]
+                if x!=y:
+                  print("Son tuplas diferentes")
+                  con=0
+                  break
+                elif i==ver1:
+                  if j==ver2:
+                    print("Son tuplas iguales")
+                    con=1
+            if x!=y:
+              con=0
+              break
+            if con==1:
+                return TRUE
+            if con==0:
+                return FALSE
 
     def __ne__(self):
         pass
@@ -371,4 +406,5 @@ class MyFloat:
 if __name__ == "__main__":
     # Escribir aca el codigo para calcular pi. Al finalizar el calculo solo
     # debe imprimir el valor de pi, sin otros textos ni nada
+    
     pass
