@@ -337,6 +337,12 @@ class MyFloat:
             resmulti[0].insert(0,"+")
         elif self.a[0][0]!=other.a[0][0]:
             resmulti[0].insert(0,"-")
+        
+        while resmulti[0][1]==0:
+            if len(resmulti[0])==2:
+                break
+            else:
+                resmulti[0].pop(0)
     
         #Convierte la lista en tupla para que la lea imprimir.
         mm=(resmulti[0],resmulti[1])
@@ -396,7 +402,7 @@ class MyFloat:
               for j in range(loninta):
                 ver2=loninta-1
                 x=self.a[i][j]
-                y=other.[i][j]
+                y=other.a[i][j]
                 if x!=y:
                   print("Son tuplas diferentes")
                   con=0
@@ -409,13 +415,16 @@ class MyFloat:
               con=0
               break
             if con==1:
-                return TRUE
-            if con==0:
-                return FALSE
+                return True
+            elif con==0:
+                return False
 
-    def __ne__(self):
-        pass
-
+    def __ne__(self,other):
+        if MyFloat.__eq__(other,self)==True:
+            return False
+        elif MyFloat.__eq__(other,self)==False:
+            return True
+            
 if __name__ == "__main__":
     # Escribir aca el codigo para calcular pi. Al finalizar el calculo solo
     # debe imprimir el valor de pi, sin otros textos ni nada
