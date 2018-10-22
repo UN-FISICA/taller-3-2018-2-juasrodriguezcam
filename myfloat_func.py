@@ -4,24 +4,26 @@ def imprimir(a):
     temp=0
     entero=""
     decimal=""
+
     for i in range (pc):
         temp=str(a[0][i])
         entero=str(entero)+temp
     for j in range (sc):
         temp=str(a[1][j])
         decimal=str(decimal)+temp
+
+    
+
     return print ("{},{}".format(entero,decimal))
 
-#Función adicional para solucionar problemas, genera una tupla dummie para no modificar la original.
 def safe(a): #Genera una copia de la tupla a,evita modificar la tupla
         ent=a[0][:]
         dec=a[1][:]
         b=(ent,dec)
         return b
 
-#Funciones adicionales para usar en suma y resta:
 #=======================================================================
-#===============================Suma1===================================
+#===============================Suma====================================
 #Esta no es la función suma que el profesor pide
 def suma1(a,b):
     a=safe(a)
@@ -133,6 +135,8 @@ def resta1(a,b):
     alld=len(a[1])
     eres=list(range(alle))
     dres=list(range(alld))
+    signa=a[0][0]
+    signb=b[0][0]
     #---------------------------Funciones-------------------------
     o=10**(alle-2)
     cuenta=0
@@ -141,26 +145,38 @@ def resta1(a,b):
         if i>0:
             compa=(a[0][i]-b[0][i])*o
             cuenta=cuenta+compa
-            o-=9*10**(alle-i-2)
-    if cuenta<0:
+            o-=9*10**(alle-i-2) 
+    if cuenta<0: #intercambia el orden de la tupla dependiendo del entero
         for i in range(alle):
             a[0][i],b[0][i]=b[0][i],a[0][i]
         for i in range(alld):
             a[1][i],b[1][i]=b[1][i],a[1][i]
-    elif cuenta==0:
+        signa=a[0][0]
+        signb=b[0][0]
+        if signa==signb:
+            if signa=="+":
+                signa="-"
+            elif signa=="-":
+                signa="+"
+    elif cuenta==0: #intercambia el orden de la tupla dependiendo del decimal
         oi=10**(alld-1)
-        cuenta=0
         for i in range(alld):
             compa=(a[1][i]-b[1][i])*oi
             cuenta1=cuenta1+compa
-            oi-=9*10**(alld-i-2)
+            oi-=9*10**(alld-i-2)    
             if cuenta1<0:
                 for i in range(alle):
                     a[0][i],b[0][i]=b[0][i],a[0][i]
                 for i in range(alld):
                     a[1][i],b[1][i]=b[1][i],a[1][i]
+                signa=a[0][0]
+                signb=b[0][0]
+                if signa==signb:
+                    if signa=="+":
+                        signa="-"
+                    elif signa=="-":
+                        signa="+"
                 break
-                
     for i in range(alld-1,-1,-1):
             resta=a[1][i]-b[1][i]
             #Por si el número de arriba es más grande.
@@ -193,12 +209,13 @@ def resta1(a,b):
         #Ingresa el valor al vector resultado.
         eres[i]=resta
     
-    signa=a[0][0]
     m=(eres,dres)
     return m,signa
-#################################### HASTA ACÁ LAS ADICIONALES ################
+    
+#========================================================================
+#==============================Suma======================================
 
-def suma(a, b):
+def suma(a,b):
     signa=a[0][0]
     signb=b[0][0]
     if signa==signb: #Si los signos son iguales suma y si no, resta.
@@ -208,8 +225,11 @@ def suma(a, b):
     elif signa!=signb:
         rr,rr[0][0]=resta1(a,b)
         return rr
-    
-def resta(a, b):
+
+#=======================================================================
+#==============================Resta====================================
+
+def resta(a,b):
     signa=a[0][0]
     signb=b[0][0]
     if signa!=signb: #Si los signos son iguales resta y si no, suma.
@@ -219,8 +239,10 @@ def resta(a, b):
     elif signa==signb:
         rr,rr[0][0]=resta1(a,b)
         return rr
-    
-def multiplicacion(a, b):
+
+#=======================================================================
+#===========================Multiplicación==============================
+def multiplicacion(a,b):
     a1=safe(a)
     b1=safe(b)
     a=safe(a)
@@ -317,6 +339,7 @@ def multiplicacion(a, b):
     #Quita el primer cero en caso de que se de
     if resmulti[0][0]==0:
         resmulti[0].pop(0)
+    #Quita los ceros adicionales atrás
     
     resl=len(resmulti[0])
     #Vuelve la lista decimal.
@@ -329,19 +352,284 @@ def multiplicacion(a, b):
         resmulti[0].insert(0,"+")
     elif a[0][0]!=b[0][0]:
         resmulti[0].insert(0,"-")
-
+    
+    while resmulti[0][1]==0:
+        if len(resmulti[0])==2:
+            break
+        else:
+            resmulti[0].pop(0)  
+            
     #Convierte la lista en tupla para que la lea imprimir.
     mm=(resmulti[0],resmulti[1])
     a=a1
     b=b1
     return mm
 
-
-def division(a, b):
-    pass
-
-
-def comparacion(a, b):
+#=======================================================================
+#============================División===================================
+def division(a,b,cifrasd=100):  
+    a=safe(a)
+    b=safe(b)
+    #Borro ceros a la izquierda:
+    while len(a[0])>1:
+        if a[0][1]==0:
+            a[0].pop(1)
+        else:
+            break
+    while len(b[0])>1:
+        if b[0][1]==0:
+            b[0].pop(1)
+        else:
+            break        
+    
+    #Borro ceros a la derecha:
+    while a[1][len(a[1])-1]==0:
+        if len(a[1])-1==0:
+            break
+        a[1].pop(len(a[1])-1)
+    while b[1][len(b[1])-1]==0:
+        if len(b[1])-1==0:
+            break
+        b[1].pop(len(b[1])-1)
+        
+    #Defino longitudes
+    all0=len(a[0])
+    all1=len(a[1])
+    bll0=len(b[0])
+    bll1=len(b[1])
+    
+    #Borro el último cero adicional
+    if all1==1:
+        if a[1][len(a[1])-1]==0:
+            a[1].pop(len(a[1])-1)
+            all1=len(a[1])
+    if bll1==1:
+        if b[1][len(b[1])-1]==0:
+            b[1].pop(len(b[1])-1)
+            bll1=len(b[1])
+        
+    #Paso a la parte decimal
+    for i in range(all0-1):
+        a[1].insert(0,a[0].pop(all0-i-1))
+    for i in range(bll0-1):
+        b[1].insert(0,b[0].pop(bll0-i-1))
+    
+    #Tomo la nueva longitud
+    alla=len(a[1])
+    bllb=len(b[1])
+    difll=alla-bllb #Diferencia entre todos los valores
+    
+    if difll<0:
+        for i in range(abs(difll)):
+            a[1].insert(len(a[1]),0)
+            
+    alla=len(a[1])
+    bllb=len(b[1])
+    difll=alla-bllb
+    
+    difeea=alla-all0+1 
+    difeeb=bllb-bll0+1
+    dife=difeea-difeeb
+    #Creo la lista del cociente:
+    cocientee=[]
+    cociented=[]
+    ############## La cuestión es cómo llegar hasta la coma #################
+    #Que lena<lenb:
+    def cocientef(a,b):
+        a=safe(a)
+        b=safe(b)
+        
+        #Defino longitudes
+        all0=len(a[0])
+        bll0=len(b[0])
+        #Paso a la parte decimal
+        for i in range(all0-1):
+            a[1].insert(0,a[0].pop(all0-i-1))
+        for i in range(bll0-1):
+            b[1].insert(0,b[0].pop(bll0-i-1))
+        #Tomo la nueva longitud
+        alla=len(a[1])
+        bllb=len(b[1])
+        difll=alla-bllb
+        
+        #Creo la lista del cociente:
+        cocientee=[]
+        ddivis=(['+'],[])
+        ddividen=(["+"],[])
+        for i in range(bllb):
+            #Copio el divisor a la lista ddivis
+            ddivis[1].insert(i,b[1][i])
+            ddivisu=safe(ddivis)
+            ddividen[1].insert(bllb-1,a[1][i])
+        while difll>=0:
+            cuenta1=0
+            aux2=len(ddividen[1])-len(ddivis[1])
+            if aux2>0:
+                ddivisu[1].insert(0,0)
+                bllb+=1
+            compal2=([],[])
+            for i in range(11):
+                #multiplico ddivis por el candidato a siguiente número
+                deter=multiplicacion(ddivisu,(['+'],[i]))
+                if deter[1][0]==0:# Dada la definición, puede haber un 0 adicional
+                    deter[1].pop(0)
+                o=10**(bllb-1)
+                cuenta=0
+                #print(ddividen,deter,ddivis)
+                compal=resta(safe(ddividen),deter)
+                for j in range(bllb):# Hace la cuenta del resto
+                    intcompa=str()
+                    for t in range(len(compal[1])):
+                        intcompa=str(compal[1][len(compal[1])-1-t])+intcompa
+                    compa=int(intcompa[j])*o
+                    cuenta=cuenta+compa #Crea el resto
+                    o-=9*10**(bllb-j-2)
+                    if i>0:
+                        if cuenta>cuenta1:
+                            compal[0][0]="-"
+                    #print(cuenta1, cuenta,deter,i,j,compal, difll)
+                    if compal[0][0]=="-": #Cuando encuentre el número
+                        cuenta1=str(cuenta1)
+                        cuenta2=(['+'],[])
+                        for k in range(len(cuenta1)):
+                            cuenta2[1].insert(k,int(cuenta1[k]))
+                        ddividen=safe(cuenta2) #El nuevo dividendo es cuenta2
+                        for s in range(len(compal2[1])):
+                            if compal2[1][s]!=0:
+                                break
+                            if s>0:
+                                if compal2[1][s]==0:
+                                    ddividen[1].insert(0,0)
+                        cocientee.insert(len(cocientee),i-1) #+Cociente
+                        if difll==0:
+                            break
+                        ddividen[1].insert(len(ddividen[1]),a[1][alla-difll])# "Baja el siguiente dig.."
+                        break
+                    aux=bllb-1
+                    if j==aux:
+                        cuenta1=cuenta
+                        compal2=safe(compal)
+                if compal[0][0]=="-": #Como ya encontró el número, no tiene que seguir.
+                    if aux2>0:
+                        ddivisu=safe(ddivis)
+                        bllb-=1
+                        aux5=len(ddividen[1])-len(ddivis[1])
+                        while aux5>1:
+                            ddividen[1].pop(0)
+                            aux5=len(ddividen[1])-len(ddivis[1])
+                    break  
+            if difll==0:
+                break
+            difll=difll-1
+        return cocientee
+    
+    #Si el número a dividir tiene más decimales
+    if dife>0:
+        cocientee=cocientef(a,b) #Crea la parte entera
+        if dife<len(cocientee):
+            for i in range(dife):
+                cocientee.pop(len(cocientee)-1)#Quita dígitos decimales como dife diga
+            while cocientee[0]==0:
+                cocientee.pop(0)
+                if len(cocientee)==0:
+                    cocientee=[0]
+                    break 
+            for i in range(cifrasd): #Aumenta a para dar más dígitos decimales
+                a[1].insert(len(a[1]),0)    
+            cociented=cocientef(a,b) #Crea la parte decimal
+            for i in range(len(cocientee)):
+                cociented.pop(0) #Quita dígitos enteros como haya en la parte entera
+            while len(cociented)>cifrasd:
+                cociented.pop(len(cociented)-1)
+                
+        elif dife>=len(cocientee):
+            lenc=len(cocientee)
+            while cocientee[0]==0:
+                cocientee.pop(0)
+            cocientee=[0]
+            for i in range(cifrasd+len(cocientee)): #Aumenta a para dar más dígitos decimales
+                a[1].insert(len(a[1]),0)    
+            cociented=cocientef(a,b) #Crea la parte decimal
+            for i in range(len(cocientee)-1):
+                cociented.pop(0) #Quita dígitos enteros como haya en la parte entera
+                if len(cociented)==0:
+                    cociented=[0] #Si no hay más para quitar, pone un cero
+            if dife>len(cocientee): #A medida que es muy grande, agrega ceros en la parte decimal
+                for i in range(dife-lenc):
+                    cociented.insert(0,0)
+            while len(cociented)>cifrasd: #Al final asegura dcifras cifras decimales
+                cociented.pop(len(cociented)-1)
+            
+    #Si el número a dividir tiene menos decimales
+    elif dife<0:
+        for i in range(abs(dife)):
+            a[1].insert(len(a[1]),0)
+        cocientee=cocientef(a,b) 
+        while cocientee[0]==0:
+            cocientee.pop(0)
+            if len(cocientee)==0:
+                cocientee=[0]
+                break
+        for i in range(cifrasd+len(cocientee)): #Aumenta a para dar más dígitos decimales
+            a[1].insert(len(a[1]),0)
+        cociented=cocientef(a,b) #Crea la parte decimal
+        for i in range(len(cocientee)):
+            cociented.pop(0) #Quita dígitos enteros como haya en la parte entera
+        while len(cociented)>cifrasd: #Al final asegura dcifras cifras decimales
+                cociented.pop(len(cociented)-1)
+    #Si tienen los mismos decimales
+    else:
+        aint=str()
+        bint=str()
+        for i in range(len(a[1])):
+            aint=aint+str(a[1][i])
+        for i in range(len(b[1])):
+            bint=bint+str(b[1][i])
+        if int(aint)<int(bint):
+            a[1].insert(len(a[1]),0)
+            cocientee=cocientef(a,b)
+            while cocientee[0]==0:
+                cocientee.pop(0)
+                if len(cocientee)==0:
+                    break
+            cocientee.pop(len(cocientee)-1)
+            if len(cocientee)==0:
+                cocientee=[0]
+            for i in range(cifrasd+len(cocientee)): #Aumenta a para dar más dígitos decimales
+                a[1].insert(len(a[1]),0)    
+            cociented=cocientef(a,b) #Crea la parte decimal
+            for i in range(len(cocientee)):
+                cociented.pop(0) #Quita dígitos enteros como haya en la parte entera
+            while len(cociented)>cifrasd: #Al final asegura dcifras cifras decimales
+                    cociented.pop(len(cociented)-1)
+        
+        else:
+            cocientee=cocientef(a,b)
+            while cocientee[0]==0:
+                cocientee.pop(0)
+                if len(cocientee)==0:
+                    cocientee=[0]
+                    break
+            for i in range(cifrasd+len(cocientee)): #Aumenta a para dar más dígitos decimales
+                a[1].insert(len(a[1]),0)    
+            cociented=cocientef(a,b) #Crea la parte decimal
+            for i in range(len(cocientee)+1):
+                cociented.pop(0) #Quita dígitos enteros como haya en la parte entera
+            while len(cociented)>cifrasd: #Al final asegura dcifras cifras decimales
+                    cociented.pop(len(cociented)-1)
+                 
+    cociente=(cocientee,cociented)
+    #Incluye el signo.
+    if a[0][0]==b[0][0]:
+        cociente[0].insert(0,"+")
+    elif a[0][0]!=b[0][0]:
+        cociente[0].insert(0,"-")
+    
+    return cociente
+ 
+#========================================================================
+#===========================Comparación==================================
+def comparacion(a,b):
     lona=len(a)
     lonb=len(b)
     if lona!=lonb:
@@ -367,7 +655,6 @@ def comparacion(a, b):
                 print("Son tuplas iguales")
         if x!=y:
           break
-
 
 def pi():
     pass
