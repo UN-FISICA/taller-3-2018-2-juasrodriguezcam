@@ -129,6 +129,7 @@ class MyFloat:
         #---------------------------Funciones-------------------------
         o=10**(alle-2)
         cuenta=0
+        cuenta1=0
         for i in range(alle):
             if i>0:
                 compa=(self.a[0][i]-other.a[0][i])*o
@@ -139,9 +140,15 @@ class MyFloat:
                 self.a[0][i],other.a[0][i]=other.a[0][i],self.a[0][i]
             for i in range(alld):
                 self.a[1][i],other.a[1][i]=other.a[1][i],self.a[1][i]
+                signa=self.a[0][0]
+                signb=other.a[0][0]
+                if signa==signb:
+                    if signa=="+":
+                        signa="-"
+                    elif signa=="-":
+                        signa="+"
         elif cuenta==0:
             oi=10**(alld-1)
-            cuenta=0
             for i in range(alld):
                 compa=(self.a[1][i]-other.a[1][i])*oi
                 cuenta1=cuenta1+compa
@@ -151,8 +158,15 @@ class MyFloat:
                         self.a[0][i],other.a[0][i]=other.a[0][i],self.a[0][i]
                     for i in range(alld):
                         self.a[1][i],other.a[1][i]=other.a[1][i],self.a[1][i]
+                    signa=self.a[0][0]
+                    signb=other.a[0][0]
+                    if signa==signb:
+                        if signa=="+":
+                            signa="-"
+                        elif signa=="-":
+                            signa="+"
                     break
-                    
+                
         for i in range(alld-1,-1,-1):
                 resta=self.a[1][i]-other.a[1][i]
                 #Por si el número de arriba es más grande.
