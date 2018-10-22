@@ -332,17 +332,16 @@ class MyFloat:
         pass
 
     def __radd__(self,other):
-        
-        pass
+        MyFloat.__add__(other,self)
 
-    def __rsub__(self):
-        pass
+    def __rsub__(self,other):
+        MyFloat.__sub__(other,self)
 
     def __rmul__(self):
-        pass
+        MyFloat.__mul__(other,self)
 
     def __rdiv__(self):
-        pass
+        MyFloat.__div__(other,self)
 
     def __str__(self):
         pass
