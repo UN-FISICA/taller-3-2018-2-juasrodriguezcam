@@ -407,22 +407,24 @@ def division(a,b,cifrasd=100):
         if b[1][len(b[1])-1]==0:
             b[1].pop(len(b[1])-1)
             bll1=len(b[1])
-        
+    
     #Paso a la parte decimal
     for i in range(all0-1):
         a[1].insert(0,a[0].pop(all0-i-1))
     for i in range(bll0-1):
         b[1].insert(0,b[0].pop(bll0-i-1))
-    
+        
     #Tomo la nueva longitud
     alla=len(a[1])
     bllb=len(b[1])
     difll=alla-bllb #Diferencia entre todos los valores
-    
+    ff=0
+
     if difll<0:
         for i in range(abs(difll)):
             a[1].insert(len(a[1]),0)
             all0+=1
+            ff+=1
             
     alla=len(a[1])
     bllb=len(b[1])
@@ -434,6 +436,7 @@ def division(a,b,cifrasd=100):
     #Creo la lista del cociente:
     cocientee=[]
     cociented=[]
+    
     ############## La cuestión es cómo llegar hasta la coma #################
     #Que lena<lenb:
     def cocientef(a,b):
@@ -452,7 +455,6 @@ def division(a,b,cifrasd=100):
         alla=len(a[1])
         bllb=len(b[1])
         difll=alla-bllb
-        
         #Creo la lista del cociente:
         cocientee=[]
         ddivis=(['+'],[])
@@ -488,7 +490,7 @@ def division(a,b,cifrasd=100):
                     if i>0:
                         if cuenta>cuenta1:
                             compal[0][0]="-"
-                    #print(cuenta1, cuenta,deter,i,j,compal, difll)
+                    #print(cuenta1, cuenta,deter,i,j,compal, difll, dife)
                     if compal[0][0]=="-": #Cuando encuentre el número
                         cuenta1=str(cuenta1)
                         cuenta2=(['+'],[])
@@ -545,8 +547,11 @@ def division(a,b,cifrasd=100):
                 
         elif dife>=len(cocientee):
             lenc=len(cocientee)
+            #print(cocientee)
             while cocientee[0]==0:
                 cocientee.pop(0)
+                if len(cocientee)==0:
+                    cociented=[0]
             cocientee=[0]
             for i in range(cifrasd+len(cocientee)): #Aumenta a para dar más dígitos decimales
                 a[1].insert(len(a[1]),0)    
@@ -599,6 +604,8 @@ def division(a,b,cifrasd=100):
             for i in range(cifrasd+len(cocientee)): #Aumenta a para dar más dígitos decimales
                 a[1].insert(len(a[1]),0)    
             cociented=cocientef(a,b) #Crea la parte decimal
+            for i in range(ff):
+                cociented.insert(0,0)
             for i in range(len(cocientee)):
                 cociented.pop(0) #Quita dígitos enteros como haya en la parte entera
             while len(cociented)>cifrasd: #Al final asegura dcifras cifras decimales
@@ -614,7 +621,7 @@ def division(a,b,cifrasd=100):
             for i in range(cifrasd+len(cocientee)): #Aumenta a para dar más dígitos decimales
                 a[1].insert(len(a[1]),0)    
             cociented=cocientef(a,b) #Crea la parte decimal
-            for i in range(len(cocientee)+1):
+            for i in range(len(cocientee)):
                 cociented.pop(0) #Quita dígitos enteros como haya en la parte entera
             while len(cociented)>cifrasd: #Al final asegura dcifras cifras decimales
                     cociented.pop(len(cociented)-1)
@@ -658,7 +665,18 @@ def comparacion(a,b):
           break
 
 def pi():
-    pass
+    aa=49
+    cc=0
+    sumar=(['+',0],[0])
+    while cc<=aa:
+        kk=(['+',cc],[0])
+        pot=(['+',1],[0])
+        for i in range(cc):
+            pot=multiplicacion((['-',1],[0]),pot)
+        denominador=suma(multiplicacion(kk,(['+',2],[0])),(['+',1],[0]))
+        sumar=suma(sumar,division(pot,denominador,29))
+        cc+=1
+    return multiplicacion(sumar,(['+',4],[0]))
 
 
 if __name__ == "__main__":
