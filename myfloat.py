@@ -364,7 +364,14 @@ class MyFloat:
         MyFloat.__div__(other,self)
 
     def __str__(self):
-        pass
+        inte=str()
+        intd=str()
+        for i in range(len(self.a[0])):
+            inte=inte+str(self.a[0][i])
+        for i in range(len(self.a[1])):
+            intd=intd+str(self.a[1][i])
+        intt=inte+","+intd
+        return intt
 
     def __repr__(self):
         self.a=MyFloat.safe(self.sa)
