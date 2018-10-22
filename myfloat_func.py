@@ -422,6 +422,7 @@ def division(a,b,cifrasd=100):
     if difll<0:
         for i in range(abs(difll)):
             a[1].insert(len(a[1]),0)
+            all0+=1
             
     alla=len(a[1])
     bllb=len(b[1])
