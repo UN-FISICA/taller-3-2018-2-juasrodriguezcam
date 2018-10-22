@@ -665,17 +665,18 @@ def comparacion(a,b):
           break
 
 def pi():
-    aa=49
+    aa=150
     cc=0
     sumar=(['+',0],[0])
+    kk=(['+',0],[0])
     while cc<=aa:
-        kk=(['+',cc],[0])
         pot=(['+',1],[0])
         for i in range(cc):
             pot=multiplicacion((['-',1],[0]),pot)
         denominador=suma(multiplicacion(kk,(['+',2],[0])),(['+',1],[0]))
         sumar=suma(sumar,division(pot,denominador,29))
         cc+=1
+        kk=suma(kk,(['+',1],[0]))
     return multiplicacion(sumar,(['+',4],[0]))
 
 
