@@ -273,7 +273,10 @@ class MyFloat:
         elif signa!=signb:
             cociente[0][0]='-'
         return cociente    
-
+ 
+#=======================================================================#
+#================================= R's =================================#  
+#=======================================================================#
     def __radd__(self,other):
         MyFloat.__add__(other,self)
 
@@ -377,7 +380,7 @@ if __name__ == "__main__":
     dividendo=MyFloat((['-',1],[]))
     cuenta=MyFloat((['+',0],[]))
     kha=MyFloat((['-',1],[]))
-    for k in range(1000000):
+    for k in range(15000000):
         kha=MyFloat(uno+kha)
         dosk=MyFloat(dos*kha)
         divisor=MyFloat(dosk+uno)
