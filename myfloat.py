@@ -285,6 +285,7 @@ class MyFloat:
 
     def __rdiv__(self):
         MyFloat.__div__(other,self)
+        
 #=======================================================================#
 #=================================Str===================================#  
 #=======================================================================#
@@ -297,6 +298,7 @@ class MyFloat:
             intd=intd+str(self.a[1][i])
         intt=inte+","+intd
         return intt
+    
 #=======================================================================#
 #================================Repr===================================#  
 #=======================================================================#
@@ -315,7 +317,10 @@ class MyFloat:
             temp=str(self.a[1][j])
             decimal=str(decimal)+temp
         return ("{},{}".format(entero,decimal))
-
+    
+#=======================================================================#
+#================================ Eq ===================================#  
+#=======================================================================#
     def __eq__(self,other):
         con=2
         lona=len(self.a)
@@ -352,7 +357,10 @@ class MyFloat:
                 return True
             elif con==0:
                 return False
-
+            
+#=======================================================================#
+#================================ Ne ===================================#  
+#=======================================================================#
     def __ne__(self,other):
         if MyFloat.__eq__(other,self)==True:
             return False
@@ -362,5 +370,19 @@ class MyFloat:
 if __name__ == "__main__":
     # Escribir aca el codigo para calcular pi. Al finalizar el calculo solo
     # debe imprimir el valor de pi, sin otros textos ni nada
-    
-    pass
+    cuatro=MyFloat((['+',4],[]))
+    dos=MyFloat((['+',2],[]))
+    uno=MyFloat((['+',1],[]))
+    menosuno=MyFloat((['-',1],[]))
+    dividendo=MyFloat((['-',1],[]))
+    cuenta=MyFloat((['+',0],[]))
+    kha=MyFloat((['-',1],[]))
+    for k in range(1000000):
+        kha=MyFloat(uno+kha)
+        dosk=MyFloat(dos*kha)
+        divisor=MyFloat(dosk+uno)
+        dividendo=MyFloat(menosuno*dividendo)
+        total=MyFloat(MyFloat.__div__(dividendo,divisor,30))
+        cuenta=MyFloat(cuenta+total)
+    pi=MyFloat(cuatro*cuenta)
+    print(pi)
