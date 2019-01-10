@@ -138,8 +138,8 @@ def resta(a,b):
 #=======================================================================
 def multiplicacion(a,b):
     #Se guardan
-    a=safe(aa)
-    b=safe(bb)
+    a=safe(a)
+    b=safe(b)
     #Quito y guardo el signo
     signa=a[0].pop(0)
     signb=b[0].pop(0)
@@ -194,8 +194,8 @@ def multiplicacion(a,b):
 #=======================================================================
 def division(a,b,cifras=100):  
     #Se guardan
-    a=safe(aa)
-    b=safe(bb)
+    a=safe(a)
+    b=safe(b)
     #Guardo los signos y los vuelvo positivos (para asegurar restar efectivamente)
     signa=a[0][0]
     signb=b[0][0]
@@ -311,21 +311,27 @@ def comparacion(a,b):
                 print("Son tuplas iguales")
         if x!=y:
           break
-
+#========================================================================
+#================================== Pi ==================================
+#========================================================================        
 def pi():
-    aa=150
-    cc=0
-    sumar=(['+',0],[0])
-    kk=(['+',0],[0])
-    while cc<=aa:
-        pot=(['+',1],[0])
-        for i in range(cc):
-            pot=multiplicacion((['-',1],[0]),pot)
-        denominador=suma(multiplicacion(kk,(['+',2],[0])),(['+',1],[0]))
-        sumar=suma(sumar,division(pot,denominador,29))
-        cc+=1
-        kk=suma(kk,(['+',1],[0]))
-    return multiplicacion(sumar,(['+',4],[0]))
+    cuatro=(['+',4],[])
+    dos=(['+',2],[])
+    uno=(['+',1],[])
+    menosuno=(['-',1],[])
+    dividendo=(['-',1],[])
+    cuenta=(['+',0],[])
+    kha=(['-',1],[])
+    for k in range(600000):
+        kha=suma(uno,kha)
+        dosk=multiplicacion(dos,kha)
+        divisor=suma(dosk,uno)
+        dividendo=multiplicacion(menosuno,dividendo)
+        total=division(dividendo,divisor,30)
+        cuenta=suma(cuenta,total)
+        #print(kha)
+    pi=multiplicacion(cuatro,cuenta)
+    return pi
 
 
 if __name__ == "__main__":
