@@ -322,7 +322,7 @@ def pi():
     dividendo=(['-',1],[])
     cuenta=(['+',0],[])
     kha=(['-',1],[])
-    for k in range(1000000):
+    for k in range(700000):
         kha=suma(uno,kha)
         dosk=multiplicacion(dos,kha)
         divisor=suma(dosk,uno)
