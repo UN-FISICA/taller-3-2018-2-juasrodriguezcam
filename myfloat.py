@@ -380,7 +380,7 @@ if __name__ == "__main__":
     dividendo=MyFloat((['-',1],[]))
     cuenta=MyFloat((['+',0],[]))
     kha=MyFloat((['-',1],[]))
-    for k in range(1000000):
+    for k in range(700000):
         kha=MyFloat(uno+kha)
         dosk=MyFloat(dos*kha)
         divisor=MyFloat(dosk+uno)
